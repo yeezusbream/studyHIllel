@@ -24,7 +24,4 @@ switch (operation)
     case "*":
         Console.WriteLine($"Result: {number1st} * {number2nd} = {number1st * number2nd}");
         break;
-
-
-
 }

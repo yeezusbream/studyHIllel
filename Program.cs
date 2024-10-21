@@ -1,7 +1,7 @@
-﻿Console.WriteLine("put 1st number");
+﻿Console.Write("put 1st number: ");
 int number1st = int.Parse(Console.ReadLine());
 
-Console.WriteLine("put 2nd number");
+Console.Write("put 2nd number: ");
 int number2nd = int.Parse(Console.ReadLine());
 
 Console.Write("Put the operator(+,-,/,*):");

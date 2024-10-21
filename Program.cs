@@ -1,29 +1,30 @@
-﻿ Console.Write("Enter number of the day:");
+﻿Console.WriteLine("put 1st number");
+int number1st = int.Parse(Console.ReadLine());
 
-        switch (Console.ReadLine())
-    
+Console.WriteLine("put 2nd number");
+int number2nd = int.Parse(Console.ReadLine());
+
+Console.Write("Put the operator(+,-,/,*):");
+string operation = Console.ReadLine();
+
+switch (operation)
 {
-            case "1":
-                Console.WriteLine("It`s Monday");
-                break;
-            case "2":
-                Console.WriteLine("It`s Tuesday");
-                break;
-            case "3":
-                Console.WriteLine("It`s Wednesday");
-                break;
-            case "4":
-                Console.WriteLine("It`s Thursday");
-                break;
-            case "5":
-                Console.WriteLine("It`s Friday");
-                break;
-            case "6":
-                Console.WriteLine("It`s Saturday");
-                break;
-            case "7":
-                Console.WriteLine("It`s Sunday");
-                break;
+    case "+":
+        Console.WriteLine($"Result: {number1st} + {number2nd} = {number1st + number2nd}");
+        break;
 
-        };
+    case "-":
+        Console.WriteLine($"Result: {number1st} - {number2nd} = {number1st - number2nd}");
+        break;
 
+    case "/":
+        Console.WriteLine($"Result: {number1st} / {number2nd} = {number1st / number2nd}");
+        break;
+
+    case "*":
+        Console.WriteLine($"Result: {number1st} * {number2nd} = {number1st * number2nd}");
+        break;
+
+
+
+}

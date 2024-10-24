@@ -1,4 +1,3 @@
-
         int number1st = GetValidNumber("Put 1st number: ");
         int number2nd = GetValidNumber("Put 2nd number: ");
 
@@ -57,10 +56,6 @@
             catch (FormatException)
             {
                 Console.WriteLine("Invalid input, please enter a valid number.");
-            }
-            catch (OverflowException)
-            {
-                Console.WriteLine("Error: The number is too large or too small.");
             }
         }
     }

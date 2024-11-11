@@ -1,160 +1,117 @@
-﻿//1 zadanie
+﻿//task1,2
 
-Console.Write("Put the number of employees: ");
-
-decimal overallSalary = 0;
-
-int HMuchEmployees = int.Parse(Console.ReadLine()!);
-
-for (int i = 1; i <= HMuchEmployees; i++)
-{
-    Console.WriteLine($"Please enter {i} employee Salary: ");
-
-    decimal EmployeeSalary = decimal.Parse(Console.ReadLine()!);
-
-    overallSalary = +EmployeeSalary;
-
-}
-Console.WriteLine($"Average salary: {overallSalary / HMuchEmployees}");
-
-
-//2 zadanie
-
-Console.Write("Please enter the number of graphics rows: ");
-
-int rows = int.Parse(Console.ReadLine()!);
-
-for (int i = 1; i <= rows; i++)
-{
-    for (int j = 1; j <= i; j++)
+    static void Main()
     {
-        Console.Write("*");
+        int[] numbers = new int[10];
+        Random random = new Random();
+
+
+    for (int i = 0; i < numbers.Length; i++)
+    {
+        numbers[i] = random.Next(-10, 11);
+    }
+
+    Console.WriteLine("Array elements with even indices:");
+    for (int i = 0; i < numbers.Length; i += 2)
+    {
+        Console.WriteLine($"Index {i}: {numbers[i]}");
+    }
+
+
+int sum = 0;
+for (int i = 0; i < numbers.Length; i++)
+{
+    sum += numbers[i];
+}
+
+Console.WriteLine($"Sum of array elements: {sum}");
+Console.WriteLine($"The sum is an integral number: {sum >= 0}");
+}
+
+//task3
+
+int[,] multiplicationTable = new int[9, 9];
+
+for (int i = 0; i < 9; i++)
+{
+    for (int j = 0; j < 9; j++)
+    {
+        multiplicationTable[i, j] = (i + 1) * (j + 1);
+    }
+}
+
+Console.WriteLine("multiplication Table 9x9:");
+for (int i = 0; i < 9; i++)
+{
+    for (int j = 0; j < 9; j++)
+    {
+        Console.Write($"{multiplicationTable[i, j],2} ");
     }
     Console.WriteLine();
 }
 
-//3 zadanie i 8 sdelano
+//task4
+int[,] array = new int[5, 5];
+Random randomyse = new Random();
 
-Console.WriteLine("Please put your number: ");
-
-int maxnumber = int.Parse(Console.ReadLine()!);
-
-Console.WriteLine($"Prime numbers till {maxnumber}: ");
-
-for (int i = 2; i <= maxnumber; i++)
+for (int i = 0; i < 5; i++)
 {
-    if (IsPrime(i))
+    for (int j = 0; j < 5; j++)
     {
-        Console.WriteLine(i);
+        array[i, j] = randomyse.Next(-10, 10);
     }
 }
 
-static bool IsPrime(int number)
-{
-    if (number < 2)
-        return false;
+int max = array[0, 0];
+int min = array[0, 0];
+(int maxX, int maxY) = (0, 0);
+(int minX, int minY) = (0, 0);
 
-    for (int i = 2; i <= Math.Sqrt(number); i++)
+for (int i = 0; i < 5; i++)
+{
+    for (int j = 0; j < 5; j++)
     {
-        if (number % i == 0)
-            return false;
-    }
-
-    return true;
-}
-
-
-
-// 4 zadanie
-
-Console.WriteLine("Please enter your password: ");
-
-string password = Console.ReadLine();
-
-char[] SpecialSymbols = { '!', '@', '#', '$', '%', '^', '?' };
-
-if (password.Length < 8)
-{
-    Console.WriteLine("Password should be longer then 8 symbols.");
-    return;
-}
-
-bool hasSpecialSymbol = false;
-foreach (char symbol in SpecialSymbols)
-{
-    if (password.Contains(symbol))
-    {
-        hasSpecialSymbol = true;
-        break;
-    }
-}
-if (!hasSpecialSymbol)
-{
-    Console.WriteLine("Password should contains any one special symbol:!,@,#,$,%,^,?");
-
-}
-
-bool hasDigit = false;
-foreach (char c in password)
-{
-    if (char.IsDigit(c))
-    {
-        hasDigit = true;
-        break;
+        if (array[i, j] > max)
+        {
+            max = array[i, j];
+            maxX = i;
+            maxY = j;
+        }
+        if (array[i, j] < min)
+        {
+            min = array[i, j];
+            minX = i;
+            minY = j;
+        }
     }
 }
 
-if (!hasDigit)
+Console.WriteLine($"Max element: {max} in position ({maxX},{maxY})");
+Console.WriteLine($"Min element: {min} in position ({minX},{minY})");
+
+//task5
+enum DayOfWeek
 {
-    Console.WriteLine("Password should contains any number");
-    return;
+    Monday = 1,
+    Tuesday = 2,
+    Wednesday = 3,
+    Thursday = 4,
+    Friday = 5,
+    Saturday = 6,
+    Sunday = 7
 }
 
-Console.WriteLine("Password is legal to use.");
-
-//5 zadanie 
-
-
-Console.WriteLine("Put the number of calculations Fibonacci numbers: ");
-
-int fNumbers = int.Parse(Console.ReadLine()!);
-
-int firstFN = 0;
-int secondFN = 1;
-
-Console.WriteLine("Fibonacci numbers: ");
-
-for (int i = 0; i < fNumbers; i++)
+class DaysOfWeek
 {
-    Console.WriteLine(firstFN + " ");
+    static void Main()
+    {
+        Console.WriteLine("put the numbers of days:");
+        int daysToAdd = int.Parse(Console.ReadLine()!);
 
-    int next = firstFN + secondFN;
-    firstFN = secondFN;
-    secondFN = next;
-}
+        DayOfWeek startDay = DayOfWeek.Monday;
+        int targetDayIndex = (int)startDay + (daysToAdd % 7) - 1;
+        DayOfWeek targetDay = (DayOfWeek)((targetDayIndex % 7) + 1);
 
-//6 zadanie 
-Console.WriteLine("Put the number of work hours: ");
-double workHour = int.Parse(Console.ReadLine()!);
-if (workHour <= 0)
-{
-    Console.WriteLine("Work hours must be greater than zero.");
-    return;
-}
-
-Console.WriteLine("Put your monthly salery: ");
-double monthSalery = int.Parse(Console.ReadLine()!);
-
-Console.WriteLine($"Your payment per hour {monthSalery / workHour}");
-
-//7 zadanie
-Console.WriteLine("Put the number what you wish multiply: ");
-int multNumber = int.Parse(Console.ReadLine()!);
-
-Console.WriteLine($"Multiplication table by {multNumber}");
-
-for (int i = 0; i <= 10; i++)
-{
-    int result = multNumber * i;
-    Console.WriteLine($"{multNumber} * {i}= {result}");
+        Console.WriteLine($"via {daysToAdd} days will be {targetDay}");
+    }
 }

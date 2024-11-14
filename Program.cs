@@ -1,20 +1,7 @@
-﻿Console.Write("Enter your First name : ");
-string firstName = Console.ReadLine();
+﻿Console.WriteLine("enter your text: ");
+string message = Console.ReadLine();
 
-Console.Write("Enter your Last name : ");
-string lastName = Console.ReadLine();
+string cleanMessage = message.Replace(" ", "");
 
-if (!string.IsNullOrEmpty(firstName) && !string.IsNullOrEmpty(lastName))
-{
-    char nameLetter = firstName.ToCharArray()[0];
-    char lastLetter = lastName.ToCharArray()[0];
-
-    if (char.ToUpper(nameLetter) == char.ToUpper(lastLetter))
-    {
-        Console.WriteLine("First letters are same");
-    }
-    else 
-    {
-    Console.WriteLine("Firs letters are different");
-    }
-}
+Console.WriteLine("Your text without spaces: ");
+Console.WriteLine(cleanMessage);

@@ -1,59 +1,28 @@
-﻿
-    string secretWord = "batman";
-    int wordlength = secretWord.Length;
-    int maxAttempts = 6;
-    int attemptsleft = maxAttempts;
-
-    char[] guessWord = new string('_', wordlength).ToArray();
-    HashSet<char> guessedLetters = new HashSet<char>();
-
-    Console.WriteLine("Welcome to game 'Visilitsya'!");
-    Console.WriteLine($"Numbers of letters in word: {wordlength}");
-    Console.WriteLine($"Numbers of wrong attempts: {maxAttempts}\n");
-
-    while (attemptsleft > 0 && Array.Exists(guessWord, c => c == '_'))
+﻿class Program
+{
+    static void Main()
     {
-        Console.WriteLine("Game word: " + string.Join(" ", guessWord));
-        Console.WriteLine($"Attempts left : {attemptsleft}");
-        Console.WriteLine("Put your Letter: ");
-        char guess;
+        Console.WriteLine(" Put the number of Fibonacci: ");
+        int n;
 
-        try
+        if (int.TryParse(Console.ReadLine(), out n) && n >= 0)
         {
-            guess = char.ToLower(Console.ReadKey().KeyChar);
-            Console.WriteLine();
-        }
-        catch
-        {
-            Console.WriteLine("Error, please put just one letter. ");
-            continue;
-        }
-
-        guessedLetters.Add(guess);
-
-        if (secretWord.Contains(guess))
-        {
-            Console.WriteLine("this word contains this letter");
-            for (int i = 0; i < wordlength; i++)
-            {
-                if (secretWord[i] == guess)
-                {
-                    guessWord[i] = guess;
-                }
-            }
+            int result = Fibonacci.Calculate(n);
+            Console.WriteLine($"Fibonacci number for order {n}: {result}");
         }
         else
         {
-            attemptsleft--;
-            Console.WriteLine($"Word doesn`t contains this letter. You have {attemptsleft}\n attempts");
+            Console.WriteLine("Put valid number positive number.");
         }
     }
-
-    if (!Array.Exists(guessWord, c => c == '_'))
+}
+    
+        static class Fibonacci
     {
-        Console.WriteLine($"\nYou won secret word was: {secretWord}.");
-    }
-    else
-    {
-        Console.WriteLine($"\nYou loose, secret word was: {secretWord}.");
+        public static int Calculate(int n)
+        {
+            if (n == 0) return 0;
+            if (n == 1) return 1;
+            return Calculate(n - 1) + Calculate(n - 2);
+        }
     }

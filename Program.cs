@@ -1,134 +1,121 @@
 ﻿using System;
 using System.Collections.Generic;
 
-class ToDoListApp
+abstract class Product
 {
-    static List<string> toDoList = new List<string>();
+    public string Name { get; }
+    public abstract decimal Price { get; }
 
+    protected Product(string name)
+    {
+        Name = name;
+    }
+}
+
+class Carrot : Product
+{
+    private decimal BasePrice;
+
+    public Carrot(decimal basePrice) : base("Carrot")
+    {
+        BasePrice = basePrice;
+    }
+
+    public override decimal Price => BasePrice;
+}
+class Potato : Product
+{
+    private decimal BasePrice;
+    private int Count;
+
+    public Potato(decimal basePrice, int count) : base("Potato")
+    {
+        BasePrice = basePrice;
+        Count = count;
+    }
+
+    public override decimal Price => BasePrice * Count;
+
+    public int GetCount() => Count;
+}
+
+class Cucumber : Product
+{
+    private decimal BasePrice;
+    private int Count;
+
+    public Cucumber(decimal basePrice, int count) : base("Cucumber")
+    {
+        BasePrice = basePrice;
+        Count = count;
+    }
+
+    public override decimal Price => BasePrice * Count;
+
+    public int GetCount() => Count;
+}
+
+class Tomato : Product
+{
+    private decimal BasePrice;
+
+    public Tomato(decimal basePrice) : base("Tomato")
+    {
+        BasePrice = basePrice;
+    }
+
+    public override decimal Price => BasePrice;
+}
+
+class VegetableShop
+{
+    private List<Product> Products = new List<Product>();
+
+    public void AddProducts(IEnumerable<Product> products)
+    {
+        Products.AddRange(products);
+    }
+
+    public void PrintProductsInfo()
+    {
+        decimal totalPrice = 0;
+
+        foreach (var product in Products)
+        {
+            if (product is Potato potato)
+            {
+                Console.WriteLine($"Product: {potato.Name}, Price: {potato.Price / potato.GetCount()}, Count: {potato.GetCount()}, Total price: {potato.Price}");
+            }
+            else if (product is Cucumber cucumber)
+            {
+                Console.WriteLine($"Product: {cucumber.Name}, Price: {cucumber.Price / cucumber.GetCount()}, Count: {cucumber.GetCount()}, Total price: {cucumber.Price}");
+            }
+            else
+            {
+                Console.WriteLine($"Product: {product.Name}, Price: {product.Price}");
+            }
+            totalPrice += product.Price;
+        }
+
+        Console.WriteLine($"Total products price: {totalPrice}");
+    }
+}
+
+class Program
+{
     static void Main()
     {
-        Console.WriteLine("Добро пожаловать в приложение \"Список дел\"!");
+        var products = new List<Product>
+        {
+            new Carrot(15),
+            new Potato(20, 4),
+            new Cucumber(14, 2),
+            new Tomato(30)
+        };
 
-        while (true)
-        {
-            Console.WriteLine("Выберите действие:");
-            Console.WriteLine("1. Добавить новое дело");
-            Console.WriteLine("2. Показать все дела");
-            Console.WriteLine("3. Отметить дело как выполненное");
-            Console.WriteLine("4. Удалить дело");
-            Console.WriteLine("5. Показать список дел (если он существует)");
-            Console.WriteLine("6. Выход");
+        VegetableShop shop = new VegetableShop();
+        shop.AddProducts(products);
 
-            Console.Write("\nВведите номер команды: ");
-            string choice = Console.ReadLine();
-
-            switch (choice)
-            {
-                case "1":
-                    AddTask();
-                    break;
-                case "2":
-                    ShowTasks();
-                    break;
-                case "3":
-                    MarkTaskAsDone();
-                    break;
-                case "4":
-                    DeleteTask();
-                    break;
-                case "5":
-                    LoadTasks();
-                    break;
-                case "6":
-                    Console.WriteLine("До свидания!");
-                    return;
-                default:
-                    Console.WriteLine("Неверная команда. Попробуйте снова.");
-                    break;
-            }
-        }
-    }
-
-    static void AddTask()
-    {
-        Console.Write("Введите новое дело: ");
-        string newTask = Console.ReadLine();
-        if (!string.IsNullOrWhiteSpace(newTask))
-        {
-            toDoList.Add(newTask);
-            Console.WriteLine($"Дело \"{newTask}\" добавлено.");
-        }
-        else
-        {
-            Console.WriteLine("Дело не может быть пустым!");
-        }
-    }
-
-    static void ShowTasks()
-    {
-        if (toDoList.Count == 0)
-        {
-            Console.WriteLine("Список дел пуст.");
-            return;
-        }
-
-        Console.WriteLine("\nВаш список дел:");
-        for (int i = 0; i < toDoList.Count; i++)
-        {
-            Console.WriteLine($"{i + 1}. {toDoList[i]}");
-        }
-    }
-
-    static void MarkTaskAsDone()
-    {
-        if (toDoList.Count == 0)
-        {
-            Console.WriteLine("\nСписок дел пуст.");
-            return;
-        }
-
-        Console.Write("\nВведите номер дела, которое выполнено: ");
-        if (int.TryParse(Console.ReadLine(), out int taskIndex) && taskIndex > 0 && taskIndex <= toDoList.Count)
-        {
-            toDoList[taskIndex - 1] += " (≧∇≦)ﾉ";
-            Console.WriteLine("Дело отмечено как выполненное.");
-        }
-        else
-        {
-            Console.WriteLine("Неверный номер дела.");
-        }
-    }
-
-    static void DeleteTask()
-    {
-        if (toDoList.Count == 0)
-        {
-            Console.WriteLine("Список дел пуст.");
-            return;
-        }
-
-        Console.Write("Введите номер дела, которое хотите удалить: ");
-        if (int.TryParse(Console.ReadLine(), out int taskIndex) && taskIndex > 0 && taskIndex <= toDoList.Count)
-        {
-            Console.WriteLine($"Дело \"{toDoList[taskIndex - 1]}\" удалено.");
-            toDoList.RemoveAt(taskIndex - 1);
-        }
-        else
-        {
-            Console.WriteLine("Неверный номер дела.");
-        }
-    }
-
-    static void LoadTasks()
-    {
-        if (toDoList.Count == 0)
-        {
-            Console.WriteLine("Список дел пуст.");
-        }
-        else
-        {
-            Console.WriteLine("Ваш текущий список дел:");
-            ShowTasks();
-        }
+        shop.PrintProductsInfo();
     }
 }

@@ -1,58 +1,39 @@
-using System;
-
-class Account
-{
-
-    private string Name;
-    private double Balance;
-
-    public Account(string name, double initialBalance)
-    {
-        if (initialBalance < 0)
-            throw new ArgumentException("Initial balance cannot be negative.");
-
-        Name = name;
-        Balance = initialBalance;
-    }
-
-    public void Deposit(double amount)
-    {
-        if (amount <= 0)
-            throw new ArgumentException("Deposit amount must be positive.");
-
-        Balance += amount;
-    }
-
-    public void Withdrawal(double amount)
-    {
-        if (amount <= 0)
-            throw new ArgumentException("Withdrawal amount must be positive.");
-        if (Balance - amount < 0)
-            throw new InvalidOperationException("Insufficient funds.");
-
-        Balance -= amount;
-    }
-
-    public double GetBalance => Balance;
-
-    public override string ToString()
-    {
-        return $"{Name}: {Balance:C}";
-    }
-}
+﻿using System;
+using System.IO;
 
 class Program
 {
     static void Main(string[] args)
     {
- 
-        Account heikkisAccount = new Account("Heikki's account", 100.00);
-        Account heikkisSwissAccount = new Account("Heikki's account in Switzerland", 1000000.00);
+        try
+        {
+            Console.Write("Enter the way to file: ");
+            string sourcePath = Console.ReadLine();
 
-        heikkisAccount.Withdrawal(20);
-        Console.WriteLine("The balance of Heikki's account is now: " + heikkisAccount.GetBalance);
+            if (!File.Exists(sourcePath))
+            {
+                Console.WriteLine("Error: File didn` founded.");
+                return;
+            }
+            Console.Write("Enter the way to file, where you need copy data: ");
+            string destinationPath = Console.ReadLine();
 
-        heikkisSwissAccount.Deposit(200);
-        Console.WriteLine("The balance of Heikki's other account is now: " + heikkisSwissAccount.GetBalance);
+            File.Copy(sourcePath, destinationPath, overwrite: true);
+
+           
+            Console.WriteLine("File copyed succesfull!");
+        }
+        catch (UnauthorizedAccessException)
+        {
+            Console.WriteLine("Error: insufficient rights to access files.");
+        }
+        catch (IOException ex)
+        {
+            Console.WriteLine($"Error entering/output: {ex.Message}");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error: {ex.Message}");
+        }
     }
 }
